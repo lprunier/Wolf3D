@@ -4,6 +4,8 @@ SRC =	main.c\
 		play.c\
 		init.c\
 		image.c\
+		check.c\
+		draw.c\
 
 CFILES = $(addprefix src/, $(SRC))
 
