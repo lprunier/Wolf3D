@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/20 13:43:42 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/10 18:02:03 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/11 14:43:41 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_map
 	double		pos_x;
 	double		pos_y;
 	double		dir;
+	double		ray;
 }				t_map;
 
 typedef struct	s_img

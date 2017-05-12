@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 14:44:56 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/10 17:42:29 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/11 15:52:44 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	ft_check_map(t_map *map)
 		return (F);
 	if (map->map[1][1] != '0')
 		return (F);
-	map->pos_x = 96;
-	map->pos_y = 96;
-	map->dir = 315;
+	map->pos_x = 224;
+	map->pos_y = 224;
+	map->dir = 150;
 	while (++i < map->width)
 		if (map->map[0][i] != '1' || map->map[map->height - 1][i] != '1')
 			return (F);
