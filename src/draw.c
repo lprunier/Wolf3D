@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/11 21:00:27 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/12 12:04:10 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	ft_find_point(t_img	img, t_map *map)
 	int	k = 0;
 
 	map->ray = map->dir - (M_PI / 6);
-	printf("map->ray=%f\n", map->ray);
+//	printf("map->ray=%f\n", map->ray);
 	while (map->ray <= map->dir + (M_PI / 6))
+//	map->ray = M_PI / 4;
+//	while (map->ray < 2 * M_PI)
 	{
 		x = BLOC / (tan(map->ray));
 		if (map->ray >= M_PI)
@@ -78,19 +80,18 @@ void	ft_find_point(t_img	img, t_map *map)
 			v.y += y;
 		}
 
-	/*	h.x = sqrt((map->pos_x - h.x)(map->pos_x - h.x) + (map->pos_y - h.y)(map->pos_y - h.y));
-		v.x = sqrt((map->pos_x - v.x)(map->pos_x - v.x) + (map->pos_y - v.y)(map->pos_y - v.y));
-		haut = h.x;
-		if (haut > v.x)
-			haut = v.x;*/
-		haut = fabs(map->pos_x - h.x) / cos(map->ray);
-		if (haut > fabs(map->pos_x - v.x) / cos(map->ray))
-			haut = fabs(map->pos_x - v.x) / cos(map->ray);
+		haut = fabs(map->pos_x - h.x) / fabs(cos(map->ray));
+	//	printf("%d->%d | map->ray=%f\n", __LINE__, (int)haut, map->ray);
+		if (haut > fabs(map->pos_x - v.x) / fabs(cos(map->ray)))
+			haut = fabs(map->pos_x - v.x) / fabs(cos(map->ray));
+	//	printf("%d->%d\n", __LINE__, (int)haut);
 		if (map->ray <= map->dir)
 			haut = haut * cos(-(M_PI / 6));
 		else
 			haut = haut * cos(M_PI / 6);
+	//	printf("%d->%d\n", __LINE__, (int)haut);
 		haut = (BLOC / haut) * PROJ;
+	//	printf("h(%d,%d) | v(%d,%d) | %d\n\n", (int)h.x / 64, (int)h.y / 64, (int)v.x / 64, (int)v.y / 64, (int)haut);
 		i = H / 2 - (haut / 2);
 		while (i <= H / 2 + (haut / 2))
 		{
@@ -98,6 +99,7 @@ void	ft_find_point(t_img	img, t_map *map)
 			i++;
 		}
 		map->ray += ((M_PI / 3) / W);
+	//	map->ray += M_PI / 2;
 		k++;
 	}
 }
