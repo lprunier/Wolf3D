@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/20 13:43:42 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/11 14:43:41 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/11 20:28:30 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 
 # define V 0
 # define F 1
-# define W 320
-# define H 200
+# define W 640
+# define H 400
+# define PROJ ((640 / 2) / tan(M_PI / 6))
 # define BLOC 64
 
 typedef struct	s_point
