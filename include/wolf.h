@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/20 13:43:42 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/11 20:28:30 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/12 15:05:56 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_point
 {
 	double		x;
 	double		y;
+	double		h;
 }				t_point;
 
 typedef struct	s_map

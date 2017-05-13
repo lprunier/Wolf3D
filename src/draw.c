@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/12 12:04:10 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/12 18:21:13 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,29 @@ void	ft_find_point(t_img	img, t_map *map)
 	double	x;
 	double	y;
 	int	i;
+	t_point place;
+	t_point placet;
 	double	haut;
 	int	k = 0;
+	int	color;
 
+	int	j;
+	i = -1;
+	while (++i < H / 2)
+	{
+		j = -1;
+		while (++j < W)
+			ft_ptoi(img, j, i, 0xccffff);
+	}
+	while (++i <= H)
+	{
+		j = -1;
+		while (++j < W)
+			ft_ptoi(img, j, i, 0x493829);
+	}
+	printf("Position (%d,%d)\n", (int)(map->pos_x / 64), (int)(map->pos_y / 64));
 	map->ray = map->dir - (M_PI / 6);
-//	printf("map->ray=%f\n", map->ray);
 	while (map->ray <= map->dir + (M_PI / 6))
-//	map->ray = M_PI / 4;
-//	while (map->ray < 2 * M_PI)
 	{
 		x = BLOC / (tan(map->ray));
 		if (map->ray >= M_PI)
@@ -57,11 +72,12 @@ void	ft_find_point(t_img	img, t_map *map)
 		h.x = map->pos_x + (map->pos_y - h.y) / tan(map->ray);
 		if (map->ray >= M_PI)
 			x = -x;
-		while (h.x > 0 && h.y > 0 && (int)h.x / BLOC < map->width && (int)h.y / BLOC < map->height && map->map[(int)h.x / BLOC][(int)h.y / BLOC] != '1')
+		while (h.x > 0 && h.y > 0 && h.x / BLOC < map->width && h.y / BLOC < map->height && map->map[(int)(h.x / BLOC)][(int)(h.y / BLOC)] != '1')
 		{
 			h.x += x;
 			h.y += y;
 		}
+
 		if (map->ray >= (M_PI / 2) && map->ray < (3 * M_PI) / 2)
 			x = -BLOC;
 		else
@@ -74,32 +90,61 @@ void	ft_find_point(t_img	img, t_map *map)
 		v.y = map->pos_y + (map->pos_x - v.x) * tan(map->ray);
 		if (!(map->ray >= (M_PI / 2) && map->ray < (3 * M_PI) / 2))
 			y = -y;
-		while (v.x > 0 && v.y > 0 && (int)v.x / BLOC < map->width && (int)v.y / BLOC < map->height && map->map[(int)v.x / BLOC][(int)v.y / BLOC] != '1')
+		while (v.x > 0 && v.y > 0 && v.x / BLOC < map->width && v.y / BLOC < map->height && map->map[(int)(v.x / BLOC)][(int)(v.y / BLOC)] != '1')
 		{
 			v.x += x;
 			v.y += y;
 		}
-
-		haut = fabs(map->pos_x - h.x) / fabs(cos(map->ray));
-	//	printf("%d->%d | map->ray=%f\n", __LINE__, (int)haut, map->ray);
-		if (haut > fabs(map->pos_x - v.x) / fabs(cos(map->ray)))
-			haut = fabs(map->pos_x - v.x) / fabs(cos(map->ray));
-	//	printf("%d->%d\n", __LINE__, (int)haut);
-		if (map->ray <= map->dir)
-			haut = haut * cos(-(M_PI / 6));
+		h.h = sqrt(pow(h.x - map->pos_x, 2) + pow(h.y - map->pos_y, 2));
+		v.h = sqrt(pow(v.x - map->pos_x, 2) + pow(v.y - map->pos_y, 2));
+		place.x = (int)(h.x / 64);
+		place.y = (int)(h.y / 64);
+		placet.x = (int)(v.x / 64);
+		placet.y = (int)(v.y / 64);
+		if (place.x > 0 && place.x < map->width - 1 && map->map[(int)place.x - 1][(int)place.y] == '1' && map->map[(int)place.x + 1][(int)place.y] == '1')
+		{
+			haut = h.h;
+			if (h.y < (int)(h.y / 64) * 64 + 32)
+				color = 0xffff00;
+			else
+				color = 0xff00ff;
+		}
+		else if (place.x >= 0 && place.x < map->width && map->map[(int)placet.x][(int)placet.y - 1] == '1' && map->map[(int)placet.x][(int)placet.y + 1] == '1')
+		{
+			haut = v.h;
+			if (v.x < (int)(v.x / 64) * 64 + 32)
+				color = 0x00ffff;
+			else
+				color = 0x00ff00;
+		}
+		else if (h.h <= v.h)
+		{
+			haut = h.h;
+			if (h.y < (int)(h.y / 64) * 64 + 32)
+				color = 0xffff00;
+			else
+				color = 0xff00ff;
+		}
 		else
-			haut = haut * cos(M_PI / 6);
-	//	printf("%d->%d\n", __LINE__, (int)haut);
+		{
+			haut = v.h;
+			if (v.x < (int)(v.x / 64) * 64 + 32)
+				color = 0x00ffff;
+			else
+				color = 0x00ff00;
+		}
+		if (map->ray > map->dir)
+			haut = haut * cos(map->dir - map->ray);
+		else
+			haut = haut * cos(map->ray - map->dir);
 		haut = (BLOC / haut) * PROJ;
-	//	printf("h(%d,%d) | v(%d,%d) | %d\n\n", (int)h.x / 64, (int)h.y / 64, (int)v.x / 64, (int)v.y / 64, (int)haut);
 		i = H / 2 - (haut / 2);
 		while (i <= H / 2 + (haut / 2))
 		{
-			ft_ptoi(img, k, i, 0xffff00);
+			ft_ptoi(img, k, i, color);
 			i++;
 		}
 		map->ray += ((M_PI / 3) / W);
-	//	map->ray += M_PI / 2;
 		k++;
 	}
 }
