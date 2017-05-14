@@ -14,7 +14,7 @@
 
 void	ft_init_img(t_img *img, void *mlx)
 {
-	img->img = mlx_new_image(mlx, 2000, 2000);
+	img->img = mlx_new_image(mlx, W, H);
 	img->bpp = 0;
 	img->sizel = 0;
 	img->endn = 0;

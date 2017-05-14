@@ -12,6 +12,15 @@
 
 #include "wolf.h"
 
+void	ft_clean_image(t_img img)
+{
+	int	i;
+
+	i = -1;
+	while (++i < W * H * 4 - 1)
+		img.cimg[i] = 0;
+}
+
 void	ft_ptoi(t_img img, int x, int y, int color)
 {
 	int	i;

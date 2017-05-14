@@ -53,9 +53,10 @@ void	ft_find_point(t_img	img, t_map *map)
 		while (++j < W)
 			ft_ptoi(img, j, i, 0x493829);
 	}
-	printf("Position (%d,%d)\n", (int)(map->pos_x / 64), (int)(map->pos_y / 64));
 	map->ray = map->dir - (M_PI / 6);
-	while (map->ray <= map->dir + (M_PI / 6))
+	if (map->ray < 0)
+		map->ray = 2 * M_PI + map->ray;
+	while (k <= W)
 	{
 		x = BLOC / (tan(map->ray));
 		if (map->ray >= M_PI)
@@ -122,6 +123,8 @@ void	ft_find_point(t_img	img, t_map *map)
 			i++;
 		}
 		map->ray += ((M_PI / 3) / W);
+		if (map->ray > 2 * M_PI)
+			map->ray = map->ray - 2 * M_PI;
 		k++;
 	}
 }

@@ -33,6 +33,15 @@ typedef struct	s_point
 	double		h;
 }				t_point;
 
+typedef struct	s_img
+{
+	void		*img;
+	char		*cimg;
+	int			bpp;
+	int			sizel;
+	int			endn;
+}				t_img;
+
 typedef struct	s_map
 {
 	char		**map;
@@ -42,16 +51,10 @@ typedef struct	s_map
 	double		pos_y;
 	double		dir;
 	double		ray;
+	void		*mlx;
+	void		*win;
+	struct s_img	img;
 }				t_map;
-
-typedef struct	s_img
-{
-	void		*img;
-	char		*cimg;
-	int			bpp;
-	int			sizel;
-	int			endn;
-}				t_img;
 
 /*
 *	check.c
@@ -67,6 +70,7 @@ void	ft_find_point(t_img	img, t_map *map);
 /*
 *	image.c
 */
+void	ft_clean_image(t_img img);
 void	ft_ptoi(t_img img, int x, int y, int color);
 
 /*
@@ -83,6 +87,7 @@ int		ft_alloc_map(char *name, t_map *map);
 /*
 *	play.c
 */
+int		ft_key_ope(int key, t_map *map);
 void	ft_play_game(t_map *map);
 
 #endif

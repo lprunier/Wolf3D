@@ -22,8 +22,8 @@ int	ft_check_map(t_map *map)
 		return (F);
 	if (map->map[1][1] != '0')
 		return (F);
-	map->pos_x = 224;
-	map->pos_y = 224;
+	map->pos_x = 96;
+	map->pos_y = 96;
 	map->dir = (7 * M_PI) / 4;
 	while (++i < map->width)
 		if (map->map[0][i] != '1' || map->map[map->height - 1][i] != '1')
