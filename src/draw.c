@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/12 18:21:13 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/13 18:47:52 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		ft_round(float x)
 	int	a;
 	int	ret;
 
-	x = x / BLOC;
 	a = (int)x;
 	if (x < a + 0.5)
 		ret = a;
@@ -36,8 +35,6 @@ void	ft_find_point(t_img	img, t_map *map)
 	double	x;
 	double	y;
 	int	i;
-	t_point place;
-	t_point placet;
 	double	haut;
 	int	k = 0;
 	int	color;
@@ -65,7 +62,7 @@ void	ft_find_point(t_img	img, t_map *map)
 			y = BLOC;
 		else
 			y = -BLOC;
-		if (map->ray >= M_PI)
+		if (map->ray <= M_PI)
 			h.y = (int)(map->pos_y / BLOC) * BLOC - 1;
 		else
 			h.y = (int)(map->pos_y / BLOC) * BLOC + BLOC;
@@ -95,29 +92,9 @@ void	ft_find_point(t_img	img, t_map *map)
 			v.x += x;
 			v.y += y;
 		}
-		h.h = sqrt(pow(h.x - map->pos_x, 2) + pow(h.y - map->pos_y, 2));
-		v.h = sqrt(pow(v.x - map->pos_x, 2) + pow(v.y - map->pos_y, 2));
-		place.x = (int)(h.x / 64);
-		place.y = (int)(h.y / 64);
-		placet.x = (int)(v.x / 64);
-		placet.y = (int)(v.y / 64);
-		if (place.x > 0 && place.x < map->width - 1 && map->map[(int)place.x - 1][(int)place.y] == '1' && map->map[(int)place.x + 1][(int)place.y] == '1')
-		{
-			haut = h.h;
-			if (h.y < (int)(h.y / 64) * 64 + 32)
-				color = 0xffff00;
-			else
-				color = 0xff00ff;
-		}
-		else if (place.x >= 0 && place.x < map->width && map->map[(int)placet.x][(int)placet.y - 1] == '1' && map->map[(int)placet.x][(int)placet.y + 1] == '1')
-		{
-			haut = v.h;
-			if (v.x < (int)(v.x / 64) * 64 + 32)
-				color = 0x00ffff;
-			else
-				color = 0x00ff00;
-		}
-		else if (h.h <= v.h)
+		h.h = sqrt(pow((int)h.x - map->pos_x, 2) + pow((int)h.y - map->pos_y, 2));
+		v.h = sqrt(pow((int)v.x - map->pos_x, 2) + pow((int)v.y - map->pos_y, 2));
+		if (h.h <= v.h)
 		{
 			haut = h.h;
 			if (h.y < (int)(h.y / 64) * 64 + 32)
