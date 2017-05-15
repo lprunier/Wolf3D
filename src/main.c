@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 11:59:34 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/14 19:56:23 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/15 15:27:41 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ int	main(int ac, char **av)
 
 	map.lvl = 0;
 	map.sun = 0;
+	map.up = 0;
+	map.down = 0;
+	map.left = 0;
+	map.right = 0;
+	map.mouse = 0;
+	map.mouse_x = W / 2;
 	if (ac == 1)
 	{
 		if (ft_alloc_map("maps/map_one", &map) == V && ft_check_map(&map) == V)
