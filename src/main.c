@@ -6,11 +6,13 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 11:59:34 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/12 13:30:38 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:11:14 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+#include <stdio.h>
 
 char	*ft_join(char *first, char *sec)
 {
@@ -32,6 +34,7 @@ int	ft_alloc_map(char *name, t_map *map)
 	char	*tmp;
 
 	map->width = 0;
+	map->lvl++;
 	map->height = 0;
 	map->map = NULL;
 	tmp = ft_strdup("\0");
@@ -58,11 +61,57 @@ int	ft_alloc_map(char *name, t_map *map)
 int	main(int ac, char **av)
 {
 	t_map	map;
+	int		i;
+	int		j;
+	int		color;
+	int		icon;
+	int		tmp;
+	int		k;
 
+	map.lvl = 0;
 	if (ac == 1)
 	{
 		if (ft_alloc_map("maps/map_one", &map) == V && ft_check_map(&map) == V)
+		{
+			i = 0;
+		//	ft_skybox(map);
+			while (i < 64)
+			{
+				j = -1;
+				color = ft_rand_brown();
+				icon = ft_rand_sable();
+				while (++j < 64)
+				{
+					map.wall[i][j] = color;
+					map.wall[i + 1][j] = color;
+					map.wall[i + 2][j] = color;
+					map.wall[i + 3][j] = color;
+					map.icon[i][j] = icon;
+					map.icon[i + 1][j] = icon;
+					map.icon[i + 2][j] = icon;
+					map.icon[i + 3][j] = icon;
+					if (j % 4 == 0)
+					{
+						color = ft_rand_brown();
+						icon = ft_rand_sable();
+					}
+				}
+				k = -1;
+				tmp = 2 + rand() % 10;
+				color = ft_rand_green();
+				while (++k < tmp)
+				{
+					map.wall[i][k] = color;
+					map.wall[i + 1][k] = color;
+					map.wall[i + 2][k] = color;
+					map.wall[i + 3][k] = color;
+					if (k % 4 == 0)
+						color = ft_rand_green();
+				}
+				i += 4;
+			}
 			ft_play_game(&map);
+		}
 		else
 			miniprintf(2, "Wolf3d: Error Parsing.\n");
 	}

@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 14:44:56 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/13 18:48:37 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/14 13:54:05 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int	ft_check_map(t_map *map)
 	i = -1;
 	if (map->width < 3 || map->height < 3)
 		return (F);
+	if (map->width != map->height)
+		return (F);
 	if (map->map[1][1] != '0')
 		return (F);
 	map->pos_x = 96;
 	map->pos_y = 96;
-	map->dir = (7 * M_PI) / 4;
+	map->dir = (6 * M_PI) / 4;
 	while (++i < map->width)
 		if (map->map[0][i] != '1' || map->map[map->height - 1][i] != '1')
 			return (F);
@@ -37,7 +39,7 @@ int	ft_check_map(t_map *map)
 	{
 		j = -1;
 		while (map->map[i][++j])
-			if (map->map[i][j] != '0' && map->map[i][j] != '1')
+			if (map->map[i][j] != '0' && map->map[i][j] != '1' && map->map[i][j] != 'F')
 				return (F);
 	}
 	i = -1;

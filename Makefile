@@ -6,6 +6,7 @@ SRC =	main.c\
 		image.c\
 		check.c\
 		draw.c\
+		wall.c\
 
 CFILES = $(addprefix src/, $(SRC))
 

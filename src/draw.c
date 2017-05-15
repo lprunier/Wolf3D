@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/13 18:47:52 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/14 18:10:10 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,58 @@ void	ft_find_point(t_img	img, t_map *map)
 	double	haut;
 	int	k = 0;
 	int	color;
-
+	int	green;
+	int	blue;
 	int	j;
+
 	i = -1;
-	while (++i < H / 2)
+	// while (++i < W)
+	// {
+	// 	j = -1;
+	// 	while (++j < H)
+	// 		ft_ptoi(img, i, j, map->back[i][j]);
+	// }
+	while (i < H / 2)
 	{
+		blue = ft_rand_blue();
 		j = -1;
 		while (++j < W)
-			ft_ptoi(img, j, i, 0xccffff);
+		{
+			ft_ptoi(img, j, i, blue);
+			ft_ptoi(img, j, i + 1, blue);
+			ft_ptoi(img, j, i + 2, blue);
+			ft_ptoi(img, j, i + 3, blue);
+			ft_ptoi(img, j, i + 4, blue);
+			ft_ptoi(img, j, i + 5, blue);
+			ft_ptoi(img, j, i + 6, blue);
+			ft_ptoi(img, j, i + 7, blue);
+			ft_ptoi(img, j, i + 8, blue);
+			ft_ptoi(img, j, i + 9, blue);
+			if (j % 10 == 0)
+				blue = ft_rand_blue();
+		}
+		i += 10;
 	}
-	while (++i <= H)
+	while (i <= H)
 	{
+		green = ft_rand_green_floor();
 		j = -1;
 		while (++j < W)
-			ft_ptoi(img, j, i, 0x493829);
+		{
+			ft_ptoi(img, j, i, green);
+			ft_ptoi(img, j, i + 1, green);
+			ft_ptoi(img, j, i + 2, green);
+			ft_ptoi(img, j, i + 3, green);
+			ft_ptoi(img, j, i + 4, green);
+			ft_ptoi(img, j, i + 5, green);
+			ft_ptoi(img, j, i + 6, green);
+			ft_ptoi(img, j, i + 7, green);
+			ft_ptoi(img, j, i + 8, green);
+			ft_ptoi(img, j, i + 9, green);
+			if (j % 10 == 0)
+				green = ft_rand_green_floor();
+		}
+		i += 10;
 	}
 	map->ray = map->dir - (M_PI / 6);
 	if (map->ray < 0)
@@ -70,7 +108,7 @@ void	ft_find_point(t_img	img, t_map *map)
 		h.x = map->pos_x + (map->pos_y - h.y) / tan(map->ray);
 		if (map->ray >= M_PI)
 			x = -x;
-		while (h.x > 0 && h.y > 0 && h.x / BLOC < map->width && h.y / BLOC < map->height && map->map[(int)(h.x / BLOC)][(int)(h.y / BLOC)] != '1')
+		while (h.x > 0 && h.y > 0 && h.x / BLOC < map->width && h.y / BLOC < map->height && map->map[(int)(h.x / BLOC)][(int)(h.y / BLOC)] != '1' && map->map[(int)(h.x / BLOC)][(int)(h.y / BLOC)] != 'F')
 		{
 			h.x += x;
 			h.y += y;
@@ -95,36 +133,52 @@ void	ft_find_point(t_img	img, t_map *map)
 		}
 		h.h = sqrt(pow((int)h.x - map->pos_x, 2) + pow((int)h.y - map->pos_y, 2));
 		v.h = sqrt(pow((int)v.x - map->pos_x, 2) + pow((int)v.y - map->pos_y, 2));
-		if (h.h <= v.h)
+		if (h.h < v.h)
 		{
 			haut = h.h;
-			if (h.y < (int)(h.y / 64) * 64 + 32)
-				color = 0xffff00;
+			if (map->map[(int)(h.x / BLOC)][(int)(h.y / BLOC)] == 'F')
+				color = 0xffffff;
 			else
-				color = 0xff00ff;
+				color = 'h';
 		}
 		else
 		{
 			haut = v.h;
-			if (v.x < (int)(v.x / 64) * 64 + 32)
-				color = 0x00ffff;
-			else
-				color = 0x00ff00;
+			color = 'v';
 		}
 		if (map->ray > map->dir)
 			haut = haut * cos(map->dir - map->ray);
 		else
 			haut = haut * cos(map->ray - map->dir);
 		haut = (BLOC / haut) * PROJ;
+		// if (map->lvl % 2 == 1 && color != 0xffffff)
+		// 	color = 0xff;
+		// ft_draw_wall(haut, color, k, img);
 		i = H / 2 - (haut / 2);
 		while (i <= H / 2 + (haut / 2))
 		{
-			ft_ptoi(img, k, i, color);
+			if (color == 0xffffff)
+				ft_ptoi(img, k, i, color);
+			else if (color == 'v')
+				ft_ptoi(img, k, i, map->wall[(int)v.y % 64][(int)((i - (H / 2 - haut / 2)) / haut * 64)]);
+			else
+				ft_ptoi(img, k, i, map->wall[(int)h.x % 64][(int)((i - (H / 2 - haut / 2)) / haut * 64)]);
 			i++;
 		}
+		i = H / 2 - (haut / 2) - 1;
 		map->ray += ((M_PI / 3) / W);
 		if (map->ray > 2 * M_PI)
 			map->ray = map->ray - 2 * M_PI;
 		k++;
 	}
+	i = -1;
+	while (++i < 64)
+	{
+		j = -1;
+		while (++j < 64)
+		{
+			ft_ptoi(img, i, j, map->icon[i][j]);
+		}
+	}
+//	printf("oui\n");
 }
