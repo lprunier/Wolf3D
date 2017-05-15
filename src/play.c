@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 16:57:48 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/14 18:09:15 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/14 20:15:20 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ int		ft_key_ope(int key, t_map *map)
 		map->dir += M_PI / 32;
 		if (map->dir > 2 * M_PI)
 			map->dir = 2 * M_PI - map->dir;
+		if (map->sun < -2500)
+			map->sun = 2500;
+		map->sun -= 80;
 		ft_find_point(map->img, map);
 		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
 	}
@@ -73,6 +76,9 @@ int		ft_key_ope(int key, t_map *map)
 		map->dir -= M_PI / 32;
 		if (map->dir < 0)
 			map->dir = 2 * M_PI - map->dir;
+		if (map->sun > 2500)
+			map->sun = -2500;
+		map->sun += 80;
 		ft_find_point(map->img, map);
 		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
 	}

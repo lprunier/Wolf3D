@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/20 13:43:42 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/14 17:53:23 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/14 19:49:08 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct	s_map
 	int			wall[64][64];
 	int			icon[64][64];
 	int			back[1280][800];
+	int			sun;
 	struct s_img	img;
 }				t_map;
 
@@ -103,6 +104,7 @@ int		ft_rand_green_floor();
 int		ft_rand_green();
 int		ft_rand_blue();
 int		ft_rand_sable();
-void	ft_skybox(t_map map);
+void	ft_sunset(t_map *map);
+void	ft_skybox(t_map *map);
 
 #endif

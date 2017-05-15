@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/14 18:10:10 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/14 19:48:58 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,59 +38,60 @@ void	ft_find_point(t_img	img, t_map *map)
 	double	haut;
 	int	k = 0;
 	int	color;
-	int	green;
-	int	blue;
+//	int	green;
+//	int	blue;
 	int	j;
 
 	i = -1;
-	// while (++i < W)
+	ft_sunset(map);
+	while (++i < W)
+	{
+		j = -1;
+		while (++j < H)
+			ft_ptoi(img, i, j, map->back[i][j]);
+	}
+	// while (i < H / 2)
 	// {
+	// 	blue = ft_rand_blue();
 	// 	j = -1;
-	// 	while (++j < H)
-	// 		ft_ptoi(img, i, j, map->back[i][j]);
+	// 	while (++j < W)
+	// 	{
+	// 		ft_ptoi(img, j, i, blue);
+	// 		ft_ptoi(img, j, i + 1, blue);
+	// 		ft_ptoi(img, j, i + 2, blue);
+	// 		ft_ptoi(img, j, i + 3, blue);
+	// 		ft_ptoi(img, j, i + 4, blue);
+	// 		ft_ptoi(img, j, i + 5, blue);
+	// 		ft_ptoi(img, j, i + 6, blue);
+	// 		ft_ptoi(img, j, i + 7, blue);
+	// 		ft_ptoi(img, j, i + 8, blue);
+	// 		ft_ptoi(img, j, i + 9, blue);
+	// 		if (j % 10 == 0)
+	// 			blue = ft_rand_blue();
+	// 	}
+	// 	i += 10;
 	// }
-	while (i < H / 2)
-	{
-		blue = ft_rand_blue();
-		j = -1;
-		while (++j < W)
-		{
-			ft_ptoi(img, j, i, blue);
-			ft_ptoi(img, j, i + 1, blue);
-			ft_ptoi(img, j, i + 2, blue);
-			ft_ptoi(img, j, i + 3, blue);
-			ft_ptoi(img, j, i + 4, blue);
-			ft_ptoi(img, j, i + 5, blue);
-			ft_ptoi(img, j, i + 6, blue);
-			ft_ptoi(img, j, i + 7, blue);
-			ft_ptoi(img, j, i + 8, blue);
-			ft_ptoi(img, j, i + 9, blue);
-			if (j % 10 == 0)
-				blue = ft_rand_blue();
-		}
-		i += 10;
-	}
-	while (i <= H)
-	{
-		green = ft_rand_green_floor();
-		j = -1;
-		while (++j < W)
-		{
-			ft_ptoi(img, j, i, green);
-			ft_ptoi(img, j, i + 1, green);
-			ft_ptoi(img, j, i + 2, green);
-			ft_ptoi(img, j, i + 3, green);
-			ft_ptoi(img, j, i + 4, green);
-			ft_ptoi(img, j, i + 5, green);
-			ft_ptoi(img, j, i + 6, green);
-			ft_ptoi(img, j, i + 7, green);
-			ft_ptoi(img, j, i + 8, green);
-			ft_ptoi(img, j, i + 9, green);
-			if (j % 10 == 0)
-				green = ft_rand_green_floor();
-		}
-		i += 10;
-	}
+	// while (i <= H)
+	// {
+	// 	green = ft_rand_green_floor();
+	// 	j = -1;
+	// 	while (++j < W)
+	// 	{
+	// 		ft_ptoi(img, j, i, green);
+	// 		ft_ptoi(img, j, i + 1, green);
+	// 		ft_ptoi(img, j, i + 2, green);
+	// 		ft_ptoi(img, j, i + 3, green);
+	// 		ft_ptoi(img, j, i + 4, green);
+	// 		ft_ptoi(img, j, i + 5, green);
+	// 		ft_ptoi(img, j, i + 6, green);
+	// 		ft_ptoi(img, j, i + 7, green);
+	// 		ft_ptoi(img, j, i + 8, green);
+	// 		ft_ptoi(img, j, i + 9, green);
+	// 		if (j % 10 == 0)
+	// 			green = ft_rand_green_floor();
+	// 	}
+	// 	i += 10;
+	// }
 	map->ray = map->dir - (M_PI / 6);
 	if (map->ray < 0)
 		map->ray = 2 * M_PI + map->ray;
