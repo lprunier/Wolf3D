@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 11:59:34 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 15:27:41 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/15 21:42:45 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,19 @@ int	main(int ac, char **av)
 				}
 				i += 4;
 			}
+		/*	i = 15;
+			while (i < 64 - 15)
+			{
+				map.icon[24][i] = ft_rand_brown();
+				map.icon[25][i] = ft_rand_brown();
+				map.icon[26][i] = ft_rand_brown();
+				map.icon[27][i] = ft_rand_brown();
+				map.icon[36][i] = ft_rand_brown();
+				map.icon[37][i] = ft_rand_brown();
+				map.icon[38][i] = ft_rand_brown();
+				map.icon[39][i] = ft_rand_brown();
+				i++;
+			}*/
 			ft_play_game(&map);
 		}
 		else
@@ -124,7 +137,7 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		miniprintf(1, "lancement map %s.\n", av[1]);
+		miniprintf(1, "%s: Wolf3d only run with predefined maps, sorry 😢.\n", av[1]);
 	}
 	return (0);
 }

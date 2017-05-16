@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 14:08:00 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/15 21:45:37 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,19 @@ void	ft_find_point(t_img	img, t_map *map)
 		{
 			ft_ptoi(img, i, j, map->icon[i][j]);
 		}
+	}
+	i = 15;
+	while (i < 64 - 15)
+	{
+		ft_ptoi(img, 24,i, ft_rand_brown());
+		ft_ptoi(img, 25,i, ft_rand_brown());
+		ft_ptoi(img, 26,i, ft_rand_brown());
+		ft_ptoi(img, 27,i, ft_rand_brown());
+		ft_ptoi(img, 36,i, ft_rand_brown());
+		ft_ptoi(img, 37,i, ft_rand_brown());
+		ft_ptoi(img, 38,i, ft_rand_brown());
+		ft_ptoi(img, 39,i, ft_rand_brown());
+		i++;
 	}
 //	printf("oui\n");
 }

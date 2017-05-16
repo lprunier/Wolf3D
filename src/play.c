@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 16:57:48 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 21:15:23 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/15 21:42:16 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,36 @@ int		ft_key_hook(int key, t_map *map)
 	return (0);
 }
 
+int		ft_mouse_hook(int button, int x, int y, t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	if (button == 1 && x >= 0 && x <= 64 && y >= 0 && y <= 64)
+	{
+		while (i < W)
+		{
+			j = 0;
+			while (j < H)
+			{
+				ft_ptoi(map->img, i, j, map->icon[i % 64][j % 64]);
+				j++;
+			}
+			i++;
+		}
+		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+	}
+	return (0);
+}
+
+int		ft_red_cross(t_map *map)
+{
+	(void)map;
+	exit(0);
+	return (0);
+}
+
 void	ft_play_game(t_map *map)
 {
 	t_img	img;
@@ -194,7 +224,8 @@ void	ft_play_game(t_map *map)
 	mlx_put_image_to_window(map->mlx, map->win, img.img, 0, 0);
 	mlx_hook(map->win, 2, 1L << 0, ft_key, map);
 	mlx_key_hook(map->win, ft_key_hook, map);
+	mlx_mouse_hook(map->win, ft_mouse_hook, map);
 	mlx_hook(map->win, 6, 1L << 6, ft_mouse_ope, map);
-//	mlx_loop_hook(map->mlx, ft_key_ope, map);
+	mlx_hook(map->win, 17, (1L << 17), ft_red_cross, map);
 	mlx_loop(map->mlx);
 }
