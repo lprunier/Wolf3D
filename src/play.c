@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 16:57:48 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 15:35:51 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/15 21:15:23 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int		ft_key_ope(t_map *map)
 			map->dir += map->right;
 		if (map->dir > 2 * M_PI)
 			map->dir = 2 * M_PI - map->dir;
-		if (map->sun < -2500)
-			map->sun = 2500;
-		map->sun -= 80 / map->right;
-//		ft_find_point(map->img, map);
-//		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+		if (map->right == 1)
+			map->right = M_PI / 32;
+		map->sun -= map->right / (2 * M_PI) * 6 * W;
+		if (map->sun <= -(W * 3))
+			map->sun = W * 3;
 	}
 	if (map->left > 0)
 	{
@@ -79,11 +79,11 @@ int		ft_key_ope(t_map *map)
 			map->dir -= map->left;
 		if (map->dir < 0)
 			map->dir = 2 * M_PI - map->dir;
-		if (map->sun > 2500)
-			map->sun = -2500;
-		map->sun += 80 / map->left;
-//		ft_find_point(map->img, map);
-//		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+		if (map->left == 1)
+			map->left = M_PI / 32;
+		map->sun += map->left / (2 * M_PI) * 6 * W;
+		if (map->sun >= W * 3)
+			map->sun = -(W * 3);
 	}
 	if (map->up == 1)
 	{
@@ -95,8 +95,6 @@ int		ft_key_ope(t_map *map)
 			if (map->map[(int)map->pos_x / 64][(int)map->pos_y / 64] == 'F')
 				ft_up_lvl(map);
 		}
-//		ft_find_point(map->img, map);
-//		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
 	}
 	if (map->down == 1)
 	{
@@ -108,8 +106,6 @@ int		ft_key_ope(t_map *map)
 			if (map->map[(int)map->pos_x / 64][(int)map->pos_y / 64] == 'F')
 				ft_up_lvl(map);
 		}
-//		ft_find_point(map->img, map);
-//		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
 	}
 	ft_find_point(map->img, map);
 	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
