@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 16:57:48 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 21:42:16 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/16 12:35:10 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ void	ft_up_lvl(t_map *map)
 	}
 	else if (map->lvl == 4)
 	{
-		miniprintf(1, "Congrats!\n");
-		exit(0);
+		ft_play_game(map);
 	}
 }
 
 int		ft_key_ope(t_map *map)
 {
+	if (map->pause == 1)
+		return (0);
 	if (map->right > 0)
 	{
 		ft_clean_image(map->img);
@@ -116,6 +117,8 @@ int		ft_mouse_ope(int x, int y, t_map *map)
 {
 	float div;
 
+	if (map->pause == 1)
+		return (0);
 	if (y < 0 || y >= H || map->mouse == 0)
 	{
 		map->right = 0;
@@ -150,6 +153,8 @@ int		ft_key(int key, t_map *map)
 {
 	if (key == 53)
 		exit(0);
+	if (map->pause == 1)
+		return (0);
 	if (key == 49 && map->mouse == 0)
 	{
 		map->mouse = 1;
@@ -182,25 +187,76 @@ int		ft_key_hook(int key, t_map *map)
 	return (0);
 }
 
+
 int		ft_mouse_hook(int button, int x, int y, t_map *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	if (button == 1 && x >= 0 && x <= 64 && y >= 0 && y <= 64)
+	if (button == 1 && x >= 0 && x <= 64 && y >= 0 && y <= 64 && map->pause == 0)
 	{
-		while (i < W)
+		map->pause = 1;
+		while (i < W / 4)
 		{
 			j = 0;
-			while (j < H)
+			while (j < H / 4)
 			{
 				ft_ptoi(map->img, i, j, map->icon[i % 64][j % 64]);
 				j++;
 			}
 			i++;
 		}
-		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+		i = 23;
+		while (++i < 40)
+		{
+			j = i - 8;
+			while (++j < 64 - i + 8)
+				ft_ptoi(map->img, i, j, map->wall[i % 64][j % 64]);
+		}
+		i = W / 8 - 10;
+		while (i < W / 8 + 50)
+		{
+			ft_ptoi(map->img, i, 58, 0x876040);
+			ft_ptoi(map->img, i, 60, 0x876040);
+			ft_ptoi(map->img, i, 82, 0x876040);
+			ft_ptoi(map->img, i, 84, 0x876040);
+			i++;
+		}
+		i = W / 8 - 20;
+		while (i < W / 8 + 60)
+		{
+			ft_ptoi(map->img, i, 118, 0x876040);
+			ft_ptoi(map->img, i, 120, 0x876040);
+			ft_ptoi(map->img, i, 142, 0x876040);
+			ft_ptoi(map->img, i, 144, 0x876040);
+			i++;
+		}
+		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);		
+		mlx_string_put(map->mlx, map->win, W / 8, 60, 0x876040, "QUIT");
+		mlx_string_put(map->mlx, map->win, W / 8 - 15, 120, 0x876040, "RESTART");
+	}
+	else if (button == 1 && map->pause == 1)
+	{
+		if (x >= (W / 8 - 20) && x <= (W / 8 + 60) && y >= 118 && y <= 144)
+		{
+			map->pos_x = 96;
+			map->pos_y = 96;
+			map->dir = 6.3 * M_PI / 4;
+			map->sun = 0;
+			map->pause = 0;
+			ft_clean_image(map->img);
+			ft_find_point(map->img, map);
+			mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);		
+		}
+		if ((x >= 0 && x < 64 && y >= 0 && y <= 64) || (x > W / 4 && y > H / 4))
+		{
+			map->pause = 0;
+			ft_find_point(map->img, map);
+			mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);		
+		}
+		else if (x >= (W / 8 - 10) && x <= (W / 8 + 50) && y >= 58 && y <= 84)
+			exit(0);
 	}
 	return (0);
 }
@@ -212,20 +268,57 @@ int		ft_red_cross(t_map *map)
 	return (0);
 }
 
+int		ft_key_close(int key, t_map *map)
+{
+	if (key == 53)
+		exit(0);
+	(void)map;
+	return (0);
+}
+
+int		ft_mouse_close(int button, int x, int y, t_map *map)
+{
+	if (button == 1 && x >= 17 && x <= 47 && y >= 17 && y <= 47)
+		exit(0);
+	(void)map;
+	return (0);
+}
+
 void	ft_play_game(t_map *map)
 {
 	t_img	img;
+	int		i;
+	int		j;
 
+	if (map->lvl > 1)
+		mlx_destroy_window(map->mlx, map->win);
 	map->mlx = mlx_init();
 	map->win = mlx_new_window(map->mlx, W, H, "Wolf3D");
 	ft_init_img(&img, map->mlx);
 	map->img = img;
 	ft_find_point(map->img, map);
 	mlx_put_image_to_window(map->mlx, map->win, img.img, 0, 0);
-	mlx_hook(map->win, 2, 1L << 0, ft_key, map);
-	mlx_key_hook(map->win, ft_key_hook, map);
-	mlx_mouse_hook(map->win, ft_mouse_hook, map);
-	mlx_hook(map->win, 6, 1L << 6, ft_mouse_ope, map);
-	mlx_hook(map->win, 17, (1L << 17), ft_red_cross, map);
+	if (map->lvl >= 4)
+	{
+		i = 17;
+		while (++i < 47)
+		{
+			j = 17;
+			while (++j < 47)
+				mlx_pixel_put(map->mlx, map->win, i, j, map->wall[i % 64][j % 64]);
+		}
+		mlx_string_put(map->mlx, map->win, W / 2 - 30, H / 2 - 10, 0x876040, "- CONGRATS! -");
+		mlx_key_hook(map->win, ft_key_close, map);
+		mlx_hook(map->win, 17, (1L << 17), ft_red_cross, map);
+		mlx_mouse_hook(map->win, ft_mouse_close, map);
+	}
+	else
+	{
+		mlx_hook(map->win, 2, 1L << 0, ft_key, map);
+		mlx_key_hook(map->win, ft_key_hook, map);
+		mlx_mouse_hook(map->win, ft_mouse_hook, map);
+		mlx_hook(map->win, 6, 1L << 6, ft_mouse_ope, map);
+		mlx_hook(map->win, 17, (1L << 17), ft_red_cross, map);
+	}
 	mlx_loop(map->mlx);
 }

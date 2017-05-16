@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 21:45:37 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/16 12:06:41 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,23 @@ void	ft_find_point(t_img	img, t_map *map)
 
 	i = -1;
 	ft_sunset(map);
+	if (map->lvl >= 4)
+	{
+		i = 0;
+		while (i < W)
+		{
+			j = 0;
+			while (j < H)
+			{
+				ft_ptoi(map->img, i, j, 0);
+				ft_ptoi(map->img, i, j, map->icon[i % 64][j % 64]);
+				j++;
+			}
+			i++;
+		}
+		mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+		return ;
+	}
 	while (++i < W)
 	{
 		j = -1;
@@ -142,14 +159,14 @@ void	ft_find_point(t_img	img, t_map *map)
 	i = 15;
 	while (i < 64 - 15)
 	{
-		ft_ptoi(img, 24,i, ft_rand_brown());
-		ft_ptoi(img, 25,i, ft_rand_brown());
-		ft_ptoi(img, 26,i, ft_rand_brown());
-		ft_ptoi(img, 27,i, ft_rand_brown());
-		ft_ptoi(img, 36,i, ft_rand_brown());
-		ft_ptoi(img, 37,i, ft_rand_brown());
-		ft_ptoi(img, 38,i, ft_rand_brown());
-		ft_ptoi(img, 39,i, ft_rand_brown());
+		ft_ptoi(img, 24, i, map->wall[24 % 64][i % 64]);
+		ft_ptoi(img, 25, i, map->wall[25 % 64][i % 64]);
+		ft_ptoi(img, 26, i, map->wall[26 % 64][i % 64]);
+		ft_ptoi(img, 27, i, map->wall[27 % 64][i % 64]);
+		ft_ptoi(img, 36, i, map->wall[36 % 64][i % 64]);
+		ft_ptoi(img, 37, i, map->wall[37 % 64][i % 64]);
+		ft_ptoi(img, 38, i, map->wall[38 % 64][i % 64]);
+		ft_ptoi(img, 39, i, map->wall[39 % 64][i % 64]);
 		i++;
 	}
 //	printf("oui\n");

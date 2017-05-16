@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 11:59:34 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 21:42:45 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/16 10:09:56 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int ac, char **av)
 	map.right = 0;
 	map.mouse = 0;
 	map.mouse_x = W / 2;
+	map.pause = 0;
 	if (ac == 1)
 	{
 		if (ft_alloc_map("maps/map_one", &map) == V && ft_check_map(&map) == V)
@@ -117,19 +118,7 @@ int	main(int ac, char **av)
 				}
 				i += 4;
 			}
-		/*	i = 15;
-			while (i < 64 - 15)
-			{
-				map.icon[24][i] = ft_rand_brown();
-				map.icon[25][i] = ft_rand_brown();
-				map.icon[26][i] = ft_rand_brown();
-				map.icon[27][i] = ft_rand_brown();
-				map.icon[36][i] = ft_rand_brown();
-				map.icon[37][i] = ft_rand_brown();
-				map.icon[38][i] = ft_rand_brown();
-				map.icon[39][i] = ft_rand_brown();
-				i++;
-			}*/
+			
 			ft_play_game(&map);
 		}
 		else

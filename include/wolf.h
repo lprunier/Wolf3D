@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/20 13:43:42 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/15 15:27:29 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/16 10:09:49 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct	s_map
 	float		right;
 	int			mouse;
 	int			mouse_x;
+	int			pause;
 	int			wall[64][64];
 	int			icon[64][64];
 	int			back[1280][800];
@@ -99,6 +100,7 @@ int		ft_alloc_map(char *name, t_map *map);
 /*
 *	play.c
 */
+int		ft_mouse_ope(int x, int y, t_map *map);
 int		ft_key_ope(t_map *map);
 void	ft_play_game(t_map *map);
 
