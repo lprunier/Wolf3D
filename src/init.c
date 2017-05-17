@@ -6,11 +6,28 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 16:39:59 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/16 15:33:00 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/17 10:43:00 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+void	ft_reset_screen(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < W)
+	{
+		j = -1;
+		while (++j < H)
+			ft_ptoi(map->img, i, j, map->back[i][j]);
+	}
+	map->ray = map->dir - (M_PI / 6);
+	if (map->ray < 0)
+		map->ray = 2 * M_PI + map->ray;
+}
 
 int		ft_color_wall(t_map *map, int i, int j, int color)
 {

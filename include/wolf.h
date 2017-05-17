@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/20 13:43:42 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/16 18:37:35 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/17 10:46:02 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,30 @@ int					ft_check_one(t_map *map);
 int					ft_check_map(t_map *map);
 
 /*
+**	close.c
+*/
+void				ft_pause(t_map *map);
+int					ft_red_cross(t_map *map);
+int					ft_key_close(int key, t_map *map);
+int					ft_mouse_close(int button, int x, int y, t_map *map);
+void				ft_winner(t_map *map);
+
+/*
 **	draw.c
 */
 void				ft_draw_haut(t_map *map, double haut, int color, int k);
-void				ft_reset_screen(t_map *map);
 void				ft_find_h(t_map *map, t_point *h);
 void				ft_find_v(t_map *map, t_point *h);
 int					ft_find_haut(t_map *map, t_point h, t_point v, int *color);
 void				ft_find_point(t_map *map);
+
+/*
+**	hooks.c
+*/
+int					ft_mouse_ope(int x, int y, t_map *map);
+int					ft_key(int key, t_map *map);
+int					ft_key_hook(int key, t_map *map);
+int					ft_mouse_hook(int button, int x, int y, t_map *map);
 
 /*
 **	icon.c
@@ -101,10 +117,20 @@ void				ft_ptoi(t_img img, int x, int y, int color);
 /*
 **	init.c
 */
+void				ft_reset_screen(t_map *map);
 int					ft_color_wall(t_map *map, int i, int j, int color);
 void				ft_color_icon(t_map *map, int i, int j, int color);
 void				ft_init_squares(t_map *map);
 void				ft_init_map(t_map *map);
+
+/*
+**	key_ope.c
+*/
+void				ft_key_right(t_map *map);
+void				ft_key_left(t_map *map);
+void				ft_key_up(t_map *map);
+void				ft_key_down(t_map *map);
+int					ft_key_ope(t_map *map);
 
 /*
 **	main.c
@@ -117,21 +143,7 @@ int					ft_alloc_map(char *name, t_map *map);
 */
 int					ft_error(void);
 void				ft_up_lvl(t_map *map);
-void				ft_key_right(t_map *map);
-void				ft_key_left(t_map *map);
-void				ft_key_up(t_map *map);
-void				ft_key_down(t_map *map);
-int					ft_key_ope(t_map *map);
-int					ft_mouse_ope(int x, int y, t_map *map);
-int					ft_key(int key, t_map *map);
-int					ft_key_hook(int key, t_map *map);
 void				ft_menu(t_map *map, int x, int y);
-void				ft_pause(t_map *map);
-int					ft_mouse_hook(int button, int x, int y, t_map *map);
-int					ft_red_cross(t_map *map);
-int					ft_key_close(int key, t_map *map);
-int					ft_mouse_close(int button, int x, int y, t_map *map);
-void				ft_winner(t_map *map);
 void				ft_play_game(t_map *map);
 
 /*

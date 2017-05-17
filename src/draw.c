@@ -6,7 +6,7 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:05:28 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/16 17:58:44 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/17 11:03:49 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,6 @@ void	ft_draw_haut(t_map *map, double haut, int color, int k)
 	map->ray += ((M_PI / 3) / W);
 	if (map->ray > 2 * M_PI)
 		map->ray = map->ray - 2 * M_PI;
-}
-
-void	ft_reset_screen(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < W)
-	{
-		j = -1;
-		while (++j < H)
-			ft_ptoi(map->img, i, j, map->back[i][j]);
-	}
-	map->ray = map->dir - (M_PI / 6);
-	if (map->ray < 0)
-		map->ray = 2 * M_PI + map->ray;
 }
 
 void	ft_find_h(t_map *map, t_point *h)
@@ -138,9 +121,9 @@ void	ft_find_point(t_map *map)
 	int		color;
 
 	k = 0;
-	ft_sunset(map);
-	if (map->lvl >= 4)
+	if (map->lvl > 4)
 		return (ft_icon_end(map));
+	ft_sunset(map);
 	ft_reset_screen(map);
 	while (k <= W)
 	{

@@ -9,6 +9,9 @@ SRC =	main.c\
 		wall.c\
 		rand.c\
 		icon.c\
+		close.c\
+		key_ope.c\
+		hooks.c\
 
 CFILES = $(addprefix src/, $(SRC))
 
