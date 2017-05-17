@@ -6,11 +6,20 @@
 /*   By: lprunier <lprunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 16:46:57 by lprunier          #+#    #+#             */
-/*   Updated: 2017/05/14 14:01:15 by lprunier         ###   ########.fr       */
+/*   Updated: 2017/05/16 14:49:27 by lprunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+void	ft_init_img(t_img *img, void *mlx)
+{
+	img->img = mlx_new_image(mlx, W, H);
+	img->bpp = 0;
+	img->sizel = 0;
+	img->endn = 0;
+	img->cimg = mlx_get_data_addr(img->img, &img->bpp, &img->sizel, &img->endn);
+}
 
 void	ft_clean_image(t_img img)
 {
